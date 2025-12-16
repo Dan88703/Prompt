@@ -1,0 +1,31 @@
+{% extends 'blog/base.html' %}
+{% block title %}Lista postów{% endblock %}
+
+{% block content %}
+<h1>Aktualne wpisy</h1>
+{% for post in posts %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h5>
+            <p class="text-muted">Autor: {{ post.author }} | {{ post.created_at|date:"d.m.Y" }}</p>
+            <p>{{ post.content|truncatewords:50|linebreaks }}</p>
+        </div>
+    </div>
+{% empty %}
+    <p>Brak opublikowanych postów.</p>
+{% endfor %}
+
+{% if is_paginated %}
+<nav>
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Poprzednia</a></li>
+        {% endif %}
+        <li class="page-item disabled"><a class="page-link">Strona {{ page_obj.number }} z {{ paginator.num_pages }}</a></li>
+        {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Następna</a></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}
