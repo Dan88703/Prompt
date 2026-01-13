@@ -7,7 +7,5 @@ urlpatterns = [
     path('', PostListView.as_view(), name='post_list'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
     path('kontakt/', contact_view, name='contact'),
-    path('admin/', admin.site.urls),
-    path('', include('blog.urls')),
 ]
 
