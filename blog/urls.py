@@ -1,11 +1,21 @@
 # blog/urls.py
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from django.contrib.auth import views as auth_views
 from .views import PostListView, PostDetailView, contact_view
 
 urlpatterns = [
     path('', PostListView.as_view(), name='post_list'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
     path('kontakt/', contact_view, name='contact'),
-]
 
+    path(
+        'login/',
+        auth_views.LoginView.as_view(template_name='registration/login.html'),
+        name='login'
+    ),
+    path(
+        'logout/',
+        auth_views.LogoutView.as_view(template_name='registration/logged_out.html'),
+        name='logout'
+    ),
+]
