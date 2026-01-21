@@ -6,8 +6,31 @@ from django.views.generic import ListView, DetailView, CreateView
 from django.core.mail import send_mail
 from django.contrib import messages
 from .models import Post
-from .forms import ContactForm
+from django.contrib.auth.models import User
+from .forms import ContactForm,UserRegistrationForm
 
+
+
+
+def register_view(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            User.objects.create_user(
+                username=cd['username'],
+                email=cd['email'],
+                password=cd['password1']
+            )
+            return redirect('register_success')
+    else:
+        form = UserRegistrationForm()
+
+    return render(request, 'registration/register.html', {'form': form})
+
+
+def register_success(request):
+    return render(request, 'registration/register_success.html')
 class PostListView(ListView):
     model = Post
     template_name = 'blog/post_list.html'

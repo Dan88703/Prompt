@@ -1,7 +1,7 @@
 # blog/urls.py
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import PostListView, PostDetailView, contact_view
+from .views import PostListView, PostDetailView, contact_view, register_view, register_success
 
 urlpatterns = [
     path('', PostListView.as_view(), name='post_list'),
@@ -18,4 +18,6 @@ urlpatterns = [
         auth_views.LogoutView.as_view(template_name='registration/logged_out.html'),
         name='logout'
     ),
+path('register/', register_view, name='register'),
+path('register/success/', register_success, name='register_success'),
 ]

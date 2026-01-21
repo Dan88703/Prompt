@@ -15,6 +15,11 @@
             <a href="{% url 'contact' %}" class="btn btn-outline-light btn-sm">
                 Kontakt
             </a>
+            {% if not user.is_authenticated %}
+    <a href="{% url 'register' %}" class="btn btn-outline-info btn-sm">
+        Rejestracja
+    </a>
+{% endif %}
 
             {% if user.is_authenticated %}
                 <span class="text-light">
